@@ -12,30 +12,36 @@
 
   <!-- Chat section -->
     <div class="message-body mt-3" v-else>
-      <h3>Chat</h3>
-      <h5>Welcome {{ name }}!</h5>
-      <div class="card">
-        <div class="card-body" id="ChatBox">
-        <div v-if="messages.length">
-          <div class="border pl-2 pt-1 ml-2 message-text mb-2" v-for="message in messages" :key="message">
+      <div class="chat-window">
+        <h3>Project Mars Delayed Chat</h3>
+        <h5>Welcome {{ name }}!</h5>
+        <div class="card">
+          <div class="card-body" id="ChatBox">
+          <div v-if="messages.length">
+            <div class="border pl-2 pt-1 ml-2 message-text mb-2" v-for="message in messages" :key="message">
 
-            <span class="mg-text">{{ message.username }}</span>
-            <p class="message pt-1">{{ message.time }} > {{ message.text }}</p>
+              <span class="mg-text">{{ message.username }}</span>
+              <p class="message pt-1">{{ message.time }} > {{ message.text }}</p>
+            </div>
+
           </div>
 
-        </div>
+          <div v-else>
+          <p>Nothing here, hmm</p>
+          </div>
 
-        <div v-else>
-        <p>Nothing here, hmm</p>
+          </div>
         </div>
+        <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
+        <button class="btn btn-primary" @click="queueMessage">Send</button> 
 
-        </div>
+        <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2 w-25" id="timeInput">
+
+        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(182)">Lowest Delay</button>
+        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(751)">Average Delay</button>
+        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button>
+
       </div>
-      <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
-      <button class="btn btn-primary" @click="queueMessage">Send</button> 
-
-      <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2" id="timeInput">
-
     </div>
   </div>
 </template>
@@ -62,6 +68,10 @@ export default {
       this.userName = "";
     },
 
+    setDelay(num) {
+      document.getElementById("timeInput").value = num;
+    },
+
     queueMessage() {
       let delay = document.getElementById("timeInput").value * 1000
       console.log("queing")
@@ -72,14 +82,29 @@ export default {
       setTimeout(function() { that.sendMessage(); }, delay)
     },
 
+    emojiReplace(string)
+    {
+      //yes this is shit code, but it's a hackathon
+      return string.replace(":eyeroll:", "🙄").replace(":thinking:", "🤔").replace(":heart:", "❤️").replace(":joy:", "😂").replace(":happy:", "😀").replace(":thumbsup:", "👍").replace(":wink:", "😉").replace(";)", "😉").replace(":)","😀")
+    },
+
     sendMessage() {
-      console.log("sending")
+      
+      if (this.showMessage.includes("/wipe"))
+      {
+        this.wipe();
+
+        //now rerun with blank, so it forces the API to update. Hacky? Yes. Quick? Oh very quick.
+        this.showMessage = "Hello, World!";
+        this.sendMessage()
+        return;
+      }
       let d = new Date();
 
       let time = d.getHours() + ":" + d.getMinutes()
 
       const message = {
-        text: this.showMessage,
+        text: this.emojiReplace(this.showMessage),
         username: this.name,
         time: time
       }
@@ -88,6 +113,10 @@ export default {
         .ref("messages")
         .push(message);
       this.showMessage = "";
+    },
+
+    wipe() {
+      fire.database().ref("messages").remove();
     },
 
     scrollToBottom() {
@@ -135,18 +164,43 @@ window.setInterval(function(){
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons");
+
 #app {
   font-family: "Roboto", sans-serif;
   font-size: 18px;
 }
+
+body {
+  background-image: Url("assets/mars-blurred.png");
+}
+
+.chat-window {
+  background: #fff;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 20px;
+  opacity: 0.9;
+}
+
 .login {
   background: #fff;
   width: 40%;
-  height: 50vh;
+  height: 20vh;
   margin: auto;
   padding-left: 20px;
   padding-right: 20px;
+  opacity: 0.9;
+  border-radius: 20px;
 }
+
+.centerDiv {
+  width: 190px;
+  padding: 10px;
+  text-align: center;
+  margin: 0 auto;
+  color: #fff;
+}
+
 h3 {
   font-size: 30px;
   text-align: center;
