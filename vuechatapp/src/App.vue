@@ -20,7 +20,7 @@
           <div class="border pl-2 pt-1 ml-2 message-text mb-2" v-for="message in messages" :key="message">
 
             <span class="mg-text">{{ message.username }}</span>
-            <p class="message pt-1">{{ message.time }} : {{ message.text }}</p>
+            <p class="message pt-1">{{ message.time }} > {{ message.text }}</p>
           </div>
 
         </div>
@@ -31,8 +31,11 @@
 
         </div>
       </div>
-      <input @keyup.enter="sendMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
-      <button class="btn btn-primary" @click="sendMessage">Send</button> 
+      <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
+      <button class="btn btn-primary" @click="queueMessage">Send</button> 
+
+      <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2" id="timeInput">
+
     </div>
   </div>
 </template>
@@ -58,7 +61,19 @@ export default {
       console.log(this.userName);
       this.userName = "";
     },
+
+    queueMessage() {
+      let delay = document.getElementById("timeInput").value * 1000
+      console.log("queing")
+
+      //I hate this, I really do.
+      var that = this
+
+      setTimeout(function() { that.sendMessage(); }, delay)
+    },
+
     sendMessage() {
+      console.log("sending")
       let d = new Date();
 
       let time = d.getHours() + ":" + d.getMinutes()
