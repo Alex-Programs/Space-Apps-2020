@@ -67,6 +67,7 @@ export default {
       this.name = this.userName;
       console.log(this.userName);
       this.userName = "";
+      this.sendMessage(this.name + " joined the server!")
     },
 
     setDelay(num) {
@@ -90,7 +91,7 @@ export default {
     },
 
     //yes, this is shitty code, but it's a hackathon
-    forceUpdate(text) {
+    logMessage(text) {
       //push message to random channel nobody reads
 
       let d = new Date();
@@ -111,19 +112,20 @@ export default {
       this.showMessage = "";
     },
 
-    sendMessage() {
+    sendMessage(overrideText=null, overrideName="System") {
       if (this.showMessage.includes("/wipe"))
       {
         this.wipe();
 
-        this.forceUpdate("Wipe")
+        this.logMessage("Wipe")
         return;
       }
 
       if (this.showMessage.includes("/channel"))
       {
         this.channel = this.showMessage.substr(9, this.showMessage.length)
-        this.forceUpdate("Channel move by : " + this.name + " : " + this.channel)
+        this.logMessage("Channel move by : " + this.name + " : " + this.channel)
+        this.sendMessage(this.name + " joined the channel!")
         return;
       }
 
@@ -131,12 +133,25 @@ export default {
 
       let time = d.getHours() + ":" + d.getMinutes()
 
-      const message = {
+      var message = {}
+
+      if (overrideName == null)
+      {
+        message = {
         text: this.emojiReplace(this.showMessage),
         username: this.name,
         time: time,
         channel: this.channel
+        }
+      } else {
+        message = {
+        text: this.emojiReplace(overrideText),
+        username: overrideName,
+        time: time,
+        channel: this.channel
+        }
       }
+
       fire
         .database()
         .ref("messages")
