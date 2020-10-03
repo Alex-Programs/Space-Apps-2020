@@ -86,11 +86,11 @@ export default {
 
     emojiReplace(string)
     {
-      //yes this is shit code, but it's a hackathon
+      //yes this is bad code, but it's a hackathon
       return string.replace(":eyeroll:", "🙄").replace(":thinking:", "🤔").replace(":heart:", "❤️").replace(":joy:", "😂").replace(":happy:", "😀").replace(":thumbsup:", "👍").replace(":wink:", "😉").replace(";)", "😉").replace(":)","😀").replace(":happy:", "😀").replace(":facepalm:", "🤦")
     },
 
-    //yes, this is shitty code, but it's a hackathon
+    //yes, this is bad code, but it's a hackathon
     logMessage(text) {
       //push message to random channel nobody reads
 
@@ -135,7 +135,7 @@ export default {
 
       var message = {}
 
-      if (overrideName == null)
+      if (overrideText == null)
       {
         message = {
         text: this.emojiReplace(this.showMessage),
