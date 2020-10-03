@@ -33,7 +33,7 @@
           </div>
         </div>
         <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
-        <button class="marsbutton" @click="queueMessage">Send</button> 
+        <button class="btn btn-primary" @click="queueMessage">Send</button> 
 
         <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2 w-25" id="timeInput">
 
