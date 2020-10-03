@@ -7,7 +7,7 @@
     <br />
     <input @keyup.enter="updateUsername" class="mb-3" type="text" v-model="userName" />
     <br />
-    <button class="btn btn-primary" @click="updateUsername">Join Chat</button>
+    <button class="marsbutton" @click="updateUsername">Join Chat</button>
    </div>
 
   <!-- Chat section -->
@@ -33,13 +33,13 @@
           </div>
         </div>
         <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
-        <button class="btn btn-primary" @click="queueMessage">Send</button> 
+        <button class="marsbutton" @click="queueMessage">Send</button> 
 
         <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2 w-25" id="timeInput">
 
-        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(182)">Lowest Delay</button>
-        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(751)">Average Delay</button>
-        <button class="btn btn-primary mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button>
+        <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(182)">Lowest Delay</button>
+        <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(751)">Average Delay</button>
+        <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button>
 
       </div>
     </div>
@@ -85,7 +85,7 @@ export default {
     emojiReplace(string)
     {
       //yes this is shit code, but it's a hackathon
-      return string.replace(":eyeroll:", "🙄").replace(":thinking:", "🤔").replace(":heart:", "❤️").replace(":joy:", "😂").replace(":happy:", "😀").replace(":thumbsup:", "👍").replace(":wink:", "😉").replace(";)", "😉").replace(":)","😀")
+      return string.replace(":eyeroll:", "🙄").replace(":thinking:", "🤔").replace(":heart:", "❤️").replace(":joy:", "😂").replace(":happy:", "😀").replace(":thumbsup:", "👍").replace(":wink:", "😉").replace(";)", "😉").replace(":)","😀").replace(":happy:", "😀").replace(":facepalm:", "🤦")
     },
 
     sendMessage() {
@@ -174,6 +174,27 @@ body {
   background-image: Url("assets/mars-blurred.png");
 }
 
+.marsbutton {
+  background-color: #B04C2A;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: box-shadow 0.2s, -moz-box-shadow 0.2s, -webkit-box-shadow 0.2s;
+}
+
+.marsbutton:hover {
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(176, 76, 42,1);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(176, 76, 42,1);
+  box-shadow: 0px 5px 10px 0px rgba(176, 76, 42,1);
+  transition: box-shadow 0.4s, -moz-box-shadow 0.4s, -webkit-box-shadow 0.4s;
+  text-decoration: none;
+}
+
 .chat-window {
   background: #fff;
   padding-left: 50px;
@@ -225,7 +246,7 @@ input {
   font-size: 14px;
 }
 .mg-text {
-  color: rgb(0, 195, 255);
+  color: rgb(176, 76, 42);
   font-weight: bolder;
 }
 .message-body input {
