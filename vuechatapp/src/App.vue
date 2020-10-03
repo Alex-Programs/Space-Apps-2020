@@ -58,7 +58,8 @@ export default {
       userName: "",
       name: null,
       showMessage: "",
-      messages: []
+      messages: [],
+      channel: "main"
     };
   },
   methods: {
@@ -88,17 +89,45 @@ export default {
       return string.replace(":eyeroll:", "🙄").replace(":thinking:", "🤔").replace(":heart:", "❤️").replace(":joy:", "😂").replace(":happy:", "😀").replace(":thumbsup:", "👍").replace(":wink:", "😉").replace(";)", "😉").replace(":)","😀").replace(":happy:", "😀").replace(":facepalm:", "🤦")
     },
 
+    //yes, this is shitty code, but it's a hackathon
+    forceUpdate(text) {
+      //push message to random channel nobody reads
+
+      let d = new Date();
+
+      let time = d.getHours() + ":" + d.getMinutes()
+
+      const message = {
+        text: text,
+        username: "System",
+        time: time,
+        channel: "logs-channel"
+      }
+
+      fire
+        .database()
+        .ref("messages")
+        .push(message);
+      this.showMessage = "";
+    },
+
     sendMessage() {
       
       if (this.showMessage.includes("/wipe"))
       {
         this.wipe();
 
-        //now rerun with blank, so it forces the API to update. Hacky? Yes. Quick? Oh very quick.
-        this.showMessage = "Hello, World!";
-        this.sendMessage()
+        this.forceUpdate("Wipe")
         return;
       }
+
+      if (this.showMessage.includes("/channel"))
+      {
+        this.channel = this.showMessage.substr(9, this.showMessage.length)
+        this.forceUpdate("Channel move: " + this.channel)
+        return;
+      }
+
       let d = new Date();
 
       let time = d.getHours() + ":" + d.getMinutes()
@@ -106,7 +135,8 @@ export default {
       const message = {
         text: this.emojiReplace(this.showMessage),
         username: this.name,
-        time: time
+        time: time,
+        channel: this.channel
       }
       fire
         .database()
@@ -131,13 +161,12 @@ export default {
     let viewMessage = this;
     const itemsRef = fire.database().ref("messages");
 
-    window.scrollToBottom = this.scrollToBottom
-
     itemsRef.on("value", snapshot => {
       let data = snapshot.val();
       let messages = [];
 
       Object.keys(data).forEach(key => {
+        if (data[key].channel == this.channel)
         messages.push({
           id: key,
           username: data[key].username,
@@ -155,8 +184,8 @@ export default {
 window.setInterval(function(){
   if (window.doScroll)
   {
-    window.scrollToBottom();
     window.doScroll = false;
+    window.scrollToBottom();
   }
 }, 100);
 
