@@ -101,7 +101,7 @@ export default {
         text: text,
         username: "System",
         time: time,
-        channel: "logs-channel"
+        channel: "logs"
       }
 
       fire
@@ -123,7 +123,7 @@ export default {
       if (this.showMessage.includes("/channel"))
       {
         this.channel = this.showMessage.substr(9, this.showMessage.length)
-        this.forceUpdate("Channel move by : " + this.userName + " : " + this.channel)
+        this.forceUpdate("Channel move by : " + this.name + " : " + this.channel)
         return;
       }
 
