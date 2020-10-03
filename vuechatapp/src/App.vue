@@ -14,7 +14,7 @@
     <div class="message-body mt-3" v-else>
       <div class="chat-window">
         <h3>Project Mars Delayed Chat</h3>
-        <h5>Welcome {{ name }}!</h5>
+        <h5>Welcome {{ name }}! You are in channel {{ channel }}</h5>
         <div class="card">
           <div class="card-body" id="ChatBox">
           <div v-if="messages.length">
@@ -161,6 +161,8 @@ export default {
     let viewMessage = this;
     const itemsRef = fire.database().ref("messages");
 
+    window.scrollToBottom = this.scrollToBottom
+
     itemsRef.on("value", snapshot => {
       let data = snapshot.val();
       let messages = [];
@@ -184,8 +186,8 @@ export default {
 window.setInterval(function(){
   if (window.doScroll)
   {
-    window.doScroll = false;
     window.scrollToBottom();
+    window.doScroll = false;
   }
 }, 100);
 
@@ -200,7 +202,7 @@ window.setInterval(function(){
 }
 
 body {
-  background-image: Url("assets/mars-blurred.png");
+  background-image: Url("assets/mars.png");
 }
 
 .marsbutton {
@@ -230,6 +232,8 @@ body {
   padding-right: 50px;
   border-radius: 20px;
   opacity: 0.9;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .login {
