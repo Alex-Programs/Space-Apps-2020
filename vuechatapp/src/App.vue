@@ -14,7 +14,7 @@
     <div class="message-body mt-3" v-else>
       <div class="chat-window">
         <h3>Project Mars Delayed Chat</h3>
-        <h5>Welcome {{ name }}! You are in channel {{ channel }}</h5>
+        <h5>Welcome {{ name }}! You are in {{ channel }}</h5>
         <div class="card">
           <div class="card-body" id="ChatBox">
           <div v-if="messages.length">
@@ -112,7 +112,6 @@ export default {
     },
 
     sendMessage() {
-      
       if (this.showMessage.includes("/wipe"))
       {
         this.wipe();
@@ -124,7 +123,7 @@ export default {
       if (this.showMessage.includes("/channel"))
       {
         this.channel = this.showMessage.substr(9, this.showMessage.length)
-        this.forceUpdate("Channel move: " + this.channel)
+        this.forceUpdate("Channel move by : " + this.userName + " : " + this.channel)
         return;
       }
 
@@ -238,8 +237,8 @@ body {
 
 .login {
   background: #fff;
-  width: 40%;
-  height: 20vh;
+  width: 50vw;
+  padding-bottom: 20px;
   margin: auto;
   padding-left: 20px;
   padding-right: 20px;
