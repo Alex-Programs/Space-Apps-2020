@@ -202,7 +202,7 @@ window.setInterval(function(){
 }
 
 body {
-  background-image: Url("assets/mars.png");
+  background-image: Url("assets/mars.jpg");
 }
 
 .marsbutton {
