@@ -11,10 +11,9 @@
    </div>
 
   <!-- Chat section -->
-    <div class="message-body mt-3" v-else>
-      <div class="chat-window">
+      <div class="chat-window" v-else>
         <h3>Project Mars Delayed Chat</h3>
-        <h5>Welcome {{ name }}! You are in {{ channel }}</h5>
+        <h5>Welcome {{ name }}! You are in the {{ channel }} channel.</h5>
         <div class="card">
           <div class="card-body" id="ChatBox">
           <div v-if="messages.length">
@@ -32,8 +31,10 @@
 
           </div>
         </div>
-        <input placeholder="Type here" @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
-        <button class="marsbutton" @click="queueMessage">Send</button> 
+        <div class="sendSection">
+          <input placeholder="Messages..." @keyup.enter="queueMessage" v-model="showMessage" type="text" class="mt-3 mr-2 pl-2 pr-2" />
+          <button style="margin-top: 10px" class="marsbutton" @click="queueMessage">Send</button> 
+        </div> 
 
         <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2 w-25" id="timeInput">
 
@@ -42,7 +43,6 @@
         <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button>
 
       </div>
-    </div>
   </div>
 </template>
 
@@ -244,15 +244,18 @@ body {
   background: #fff;
   padding-left: 50px;
   padding-right: 50px;
+  padding-bottom: 50px;
   border-radius: 20px;
   opacity: 0.9;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  max-width: 800px;
+  margin: auto;
 }
 
 .login {
   background: #fff;
-  width: 50vw;
+  max-width: 800px;
   padding-bottom: 20px;
   margin: auto;
   padding-left: 20px;
