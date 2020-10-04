@@ -164,10 +164,10 @@ export default {
     },
 
     scrollToBottom() {
-      var elementFuckingWorkYouUselessShit = document.getElementsByClassName("message pt-1");
+      var pleaseWork = document.getElementsByClassName("message pt-1");
 
-      elementFuckingWorkYouUselessShit = elementFuckingWorkYouUselessShit[elementFuckingWorkYouUselessShit.length - 1]
-      elementFuckingWorkYouUselessShit.scrollIntoView({ behavior: "smooth", block: "end" });
+      pleaseWork = pleaseWork[pleaseWork.length - 1]
+      pleaseWork.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   },
 
@@ -196,7 +196,7 @@ export default {
   },
 };
 
-//yes, this is shit code. But it works!
+//yes, this is bad code. But it works!
 window.setInterval(function(){
   if (window.doScroll)
   {
