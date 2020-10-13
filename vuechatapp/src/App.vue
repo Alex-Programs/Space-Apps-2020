@@ -79,7 +79,7 @@ export default {
       if (this.passwordEntry == "this password has high entropy") {
         this.passwordAllowed = true;
       } else {
-        alert(this.passwordEntry)
+        alert("Wrong")
       }
     },
 
