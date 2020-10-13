@@ -1,7 +1,17 @@
 <template>
   <div id="app">
+    <!-- Auth section -->
+    <div class="login mt-5" v-if="passwordAllowed==false">
+      <h3 class="mt-5">Password Required</h3>
+      <label for="username">Enter Password:</label>
+      <br />
+      <input @keyup.enter="checkPassword" class="mb-3" type="password" v-model="passwordEntry" />
+      <br />
+      <button class="marsbutton" @click="checkPassword">Continue</button>
+    </div>
+
    <!-- Login section -->
-   <div class="login mt-5" v-if="!name">
+   <div class="login mt-5" v-if="!name && passwordAllowed==true">
     <h3 class="mt-5">Join Chat</h3>
     <label for="username">Enter Username:</label>
     <br />
@@ -11,7 +21,7 @@
    </div>
 
   <!-- Chat section -->
-      <div class="chat-window" v-else>
+      <div class="chat-window" v-if="name && passwordAllowed">
         <h3>Project Mars Delayed Chat</h3>
         <h5>Welcome {{ name }}! You are in the {{ channel }} channel.</h5>
         <div class="card">
@@ -59,10 +69,20 @@ export default {
       name: null,
       showMessage: "",
       messages: [],
-      channel: "main"
+      channel: "main",
+      passwordAllowed: false,
+      passwordEntry: ""
     };
   },
   methods: {
+    checkPassword() {
+      if (this.passwordEntry == "this password has high entropy") {
+        this.passwordAllowed = true;
+      } else {
+        alert(this.passwordEntry)
+      }
+    },
+
     updateUsername() {
       this.name = this.userName;
       console.log(this.userName);
