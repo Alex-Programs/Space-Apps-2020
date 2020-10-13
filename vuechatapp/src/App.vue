@@ -83,6 +83,30 @@ export default {
       }
     },
 
+    notification() {
+      console.log("Notifying")
+      if (!window.Notification) {
+        console.log('Browser does not support notifications.');
+      } else {
+        // check if permission is already granted
+        if (Notification.permission === 'granted') {
+          new Notification('');
+        } else {
+          // request permission from user
+          Notification.requestPermission().then(function(p) {
+            if(p === 'granted') {
+              new Notification('');
+
+            } else {
+              console.log('');
+            }
+          }).catch(function(err) {
+            console.error(err);
+          });
+        }
+      }
+    },
+
     updateUsername() {
       this.name = this.userName;
       console.log(this.userName);
@@ -198,6 +222,7 @@ export default {
     window.scrollToBottom = this.scrollToBottom
 
     itemsRef.on("value", snapshot => {
+
       let data = snapshot.val();
       let messages = [];
 
@@ -208,9 +233,12 @@ export default {
           username: data[key].username,
           text: data[key].text,
           time: data[key].time
-        });        
+        });
       })
+
+      this.notification()
       viewMessage.messages = messages;
+
       window.doScroll = true;
     });
   },
