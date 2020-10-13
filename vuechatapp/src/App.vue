@@ -46,12 +46,11 @@
           <button style="margin-top: 10px" class="marsbutton" @click="queueMessage">Send</button> 
         </div> 
 
-        <!-- here's the mars stuff, don't need it
         <input value="0" placeholder="Delay here" type="number" class="mt-3 mr-2 pl-2 pr-2 w-25" id="timeInput">
 
         <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(182)">Lowest Delay</button>
         <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(751)">Average Delay</button>
-        <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button> -->
+        <button class="marsbutton mt-1 mr-2 ml-2" @click="setDelay(1342)">Highest Delay</button>
 
       </div>
   </div>
