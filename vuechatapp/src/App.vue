@@ -76,7 +76,9 @@ export default {
   },
   methods: {
     checkPassword() {
-      if (this.passwordEntry == "this password has high entropy") {
+      window.showChannelChange = true;
+
+      if (this.passwordEntry == "password two") {
         this.passwordAllowed = true;
       } else {
         alert("Wrong")
@@ -169,7 +171,11 @@ export default {
       {
         this.channel = this.showMessage.substr(9, this.showMessage.length)
         this.logMessage("Channel move by : " + this.name + " : " + this.channel)
-        this.sendMessage(this.name + " joined the channel!")
+
+        if (window.showChannelChange == true)
+        {
+          this.sendMessage(this.name + " joined the channel!")
+        }
         return;
       }
 
